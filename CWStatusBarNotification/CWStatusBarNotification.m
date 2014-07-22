@@ -15,6 +15,24 @@
 #define SCROLL_SPEED 40.0f
 #define SCROLL_DELAY 1.0f
 
+@interface CWViewController : UIViewController
+
+@end
+
+@implementation CWViewController
+
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+@end
+
 @implementation CWWindowContainer
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
@@ -256,11 +274,8 @@ static void cancel_delayed_block(CWDelayedBlockHandle delayedHandle)
 
 - (void)updateStatusBarFrame
 {
-    if(self.shouldAutoRotate)
-    {
-        self.notificationLabel.frame = [self getNotificationLabelFrame];
-        self.statusBarView.hidden = YES;
-    }
+    self.notificationLabel.frame = [self getNotificationLabelFrame];
+    self.statusBarView.hidden = YES;
 }
 
 # pragma mark - on tap
@@ -308,7 +323,14 @@ static void cancel_delayed_block(CWDelayedBlockHandle delayedHandle)
     self.notificationWindow.userInteractionEnabled = YES;
     self.notificationWindow.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.notificationWindow.windowLevel = UIWindowLevelStatusBar;
-    self.notificationWindow.rootViewController = [UIViewController new];
+    if(self.shouldAutoRotate)
+    {
+        self.notificationWindow.rootViewController = [UIViewController new];
+    }
+    else
+    {
+        self.notificationWindow.rootViewController = [CWViewController new];
+    }
 }
 
 - (void)createStatusBarView
