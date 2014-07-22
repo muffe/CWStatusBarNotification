@@ -159,6 +159,7 @@ static void cancel_delayed_block(CWDelayedBlockHandle delayedHandle)
         self.notificationAnimationOutStyle = CWNotificationAnimationStyleBottom;
         self.notificationAnimationType = CWNotificationAnimationTypeReplace;
         self.notificationIsDismissing = NO;
+        self.shouldAutoRotate = YES;
 
         // create tap recognizer
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(notificationTapped:)];
@@ -255,8 +256,11 @@ static void cancel_delayed_block(CWDelayedBlockHandle delayedHandle)
 
 - (void)updateStatusBarFrame
 {
-    self.notificationLabel.frame = [self getNotificationLabelFrame];
-    self.statusBarView.hidden = YES;
+    if(self.shouldAutoRotate)
+    {
+        self.notificationLabel.frame = [self getNotificationLabelFrame];
+        self.statusBarView.hidden = YES;
+    }
 }
 
 # pragma mark - on tap

@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, CWNotificationAnimationType) {
 @property (strong, nonatomic) UIColor *notificationLabelTextColor;
 @property (assign, nonatomic) CGFloat notificationLabelHeight;
 @property (assign, nonatomic) BOOL multiline;
+@property (assign, nonatomic) BOOL shouldAutoRotate;
 
 @property (strong, nonatomic) UIView *statusBarView;
 
