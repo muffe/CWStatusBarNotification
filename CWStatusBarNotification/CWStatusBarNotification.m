@@ -37,7 +37,16 @@
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    if (point.y > 0 && point.y < [UIApplication sharedApplication].statusBarFrame.size.height) {
+    CGFloat statusBarHeight = 0.f;
+    if((UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])))
+    {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.width;
+    }
+    else
+    {
+        statusBarHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+    }
+    if (point.y > 0 && point.y < statusBarHeight) {
         return [super hitTest:point withEvent:event];
     }
     
